@@ -29,6 +29,22 @@ function startScan() {
 
     cordova.plugins.barcodeScanner.scan(
         function (result) {
+            if(result.cancelled == true) {
+                alert("Scanning aborted.");
+            } else {
+                var xmlhttp = new XMLHttpRequest();
+                var url = "http://fr.openfoodfacts.org/api/v0/produit/3029330003533.json";
+
+                xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        var myArr = JSON.parse(xmlhttp.responseText);
+                        myFunction(myArr);
+                    }
+                }
+                
+                
+            }
+
             var s = "Result: " + result.text + "<br/>" +
             "Format: " + result.format + "<br/>" +
             "Cancelled: " + result.cancelled;
@@ -41,3 +57,13 @@ function startScan() {
 
 }
 
+function myFunction(arr) {
+
+
+    var out = "";
+    var i;
+    for(i = 0; i < arr.length; i++) {
+        out += '<a href="' + arr[i].url + '">' + arr[i].display + '</a><br>';
+    }
+    document.getElementById("id01").innerHTML = out;
+}
