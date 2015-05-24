@@ -30,8 +30,7 @@ function startScan() {
     cordova.plugins.barcodeScanner.scan(
         function (result) {
             if(result.cancelled == true) {
-                alert("Scanning aborted.");
-            } else {
+                 
                 var xmlhttp = new XMLHttpRequest();
                 var url = "http://fr.openfoodfacts.org/api/v0/produit/3029330003533.json";
 
@@ -41,7 +40,9 @@ function startScan() {
                         myFunction(myArr);
                     }
                 }
-                
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+
                 
             }
 
@@ -60,10 +61,14 @@ function startScan() {
 function myFunction(arr) {
 
 
-    var out = "";
-    var i;
-    for(i = 0; i < arr.length; i++) {
-        out += '<a href="' + arr[i].url + '">' + arr[i].display + '</a><br>';
-    }
-    document.getElementById("id01").innerHTML = out;
+// URL du Json mais je ne sais pas comment récup' le code barre scanné pour remplacer celui dans l'url
+
+
+
+var out = "";
+
+    out +="Le produit est "+arr.product.product_name+", de la marque "+arr.product.brands+", le code barre est "+arr.code;
+
+    out+= '<img src="'+arr.product.image_url+'" alt="" />'; 
+    resultDiv.innerHTML = out;
 }
