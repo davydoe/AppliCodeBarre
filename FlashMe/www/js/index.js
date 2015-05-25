@@ -36,22 +36,19 @@ function startScan() {
             var myArr ;
 
             var httpReq = new plugin.HttpRequest();
-            httpReq.getJSON("http://fr.openfoodfacts.org/api/v0/produit/3038350013804.json", function(status, data) {
+            httpReq.getJSON("http://fr.openfoodfacts.org/api/v0/produit/"+result.text+".json", function(status, data) {
                
                myArr = JSON.stringify(data);
-               alert(myArr);
-               
+               myArr = JSON.parse(myArr);
+               var out = "";
+
+                out +="Le produit est "+myArr.product.product_name+", de la marque "+myArr.product.brands+", le code barre est "+myArr.code;
+
+                out+= '\n<img src="'+myArr.product.image_url+'" alt="" />'; 
+                resultDiv.innerHTML = out;
+                alert(out);
             
             });
-            var out = "";
-
-            out +="Le produit est "+myArr.product.product_name+", de la marque "+myArr.product.brands+", le code barre est "+myArr.code;
-
-            out+= '<img src="'+myArr.product.image_url+'" alt="" />'; 
-            resultDiv.innerHTML = out;
-            s += "Result: " + result.text + "<br/>" +
-            "Format: " + result.format + "<br/>" +
-            "Cancelled: " + result.cancelled;
             
 
 
@@ -63,6 +60,6 @@ function startScan() {
             alert("Scanning failed: " + error);
         }
     );
-
+    delay(2000);
 
 }
