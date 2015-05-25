@@ -15,6 +15,10 @@
                         {
                             "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"HttpRequest\"><param name=\"android-package\" value=\"plugin.http.request.HttpRequest\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -46,6 +50,10 @@
                         },
                         {
                             "xml": "<uses-feature android:name=\"android.hardware.camera\" android:required=\"false\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
                             "count": 1
                         }
                     ]
@@ -540,6 +548,9 @@
             "PACKAGE_NAME": "io.cordova.hellocordova"
         },
         "com.phonegap.plugins.barcodescanner": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "plugin.http.request": {
             "PACKAGE_NAME": "io.cordova.hellocordova"
         }
     },

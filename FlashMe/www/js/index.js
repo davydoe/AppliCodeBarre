@@ -18,6 +18,7 @@
  */
 
 var resultDiv;
+var s ;
 
 document.addEventListener("deviceready", init, false);
 function init() {
@@ -27,48 +28,41 @@ function init() {
 
 function startScan() {
 
+
+    
+
     cordova.plugins.barcodeScanner.scan(
         function (result) {
-            if(result.cancelled == true) {
-                 
-                var xmlhttp = new XMLHttpRequest();
-                var url = "http://fr.openfoodfacts.org/api/v0/produit/3029330003533.json";
+            var myArr ;
 
-                xmlhttp.onreadystatechange = function() {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        var myArr = JSON.parse(xmlhttp.responseText);
-                        myFunction(myArr);
-                    }
-                }
-                xmlhttp.open("GET", url, true);
-                xmlhttp.send();
+            var httpReq = new plugin.HttpRequest();
+            httpReq.getJSON("http://fr.openfoodfacts.org/api/v0/produit/3038350013804.json", function(status, data) {
+               
+               myArr = JSON.stringify(data);
+               alert(myArr);
+               
+            
+            });
+            var out = "";
 
-                
-            }
+            out +="Le produit est "+myArr.product.product_name+", de la marque "+myArr.product.brands+", le code barre est "+myArr.code;
 
-            var s = "Result: " + result.text + "<br/>" +
+            out+= '<img src="'+myArr.product.image_url+'" alt="" />'; 
+            resultDiv.innerHTML = out;
+            s += "Result: " + result.text + "<br/>" +
             "Format: " + result.format + "<br/>" +
             "Cancelled: " + result.cancelled;
-            resultDiv.innerHTML = s;
+            
+
+
+
+              
+
         }, 
         function (error) {
             alert("Scanning failed: " + error);
         }
     );
 
-}
 
-function myFunction(arr) {
-
-
-// URL du Json mais je ne sais pas comment récup' le code barre scanné pour remplacer celui dans l'url
-
-
-
-var out = "";
-
-    out +="Le produit est "+arr.product.product_name+", de la marque "+arr.product.brands+", le code barre est "+arr.code;
-
-    out+= '<img src="'+arr.product.image_url+'" alt="" />'; 
-    resultDiv.innerHTML = out;
 }

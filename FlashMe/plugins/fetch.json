@@ -15,5 +15,13 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "plugin.http.request": {
+        "source": {
+            "type": "registry",
+            "id": "plugin.http.request"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }
